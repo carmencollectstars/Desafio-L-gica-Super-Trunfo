@@ -1,0 +1,80 @@
+# Desafio-L-gica-Super-Trunfo
+Objetivo: Criar um jogo onde o jogador e o computador recebem cartas com atributos (velocidade, força, poder). O jogador escolhe um atributo para comparar, e o maior valor vence a rodada!
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+
+// Estrutura para representar uma carta
+typedef struct {
+    char nome[50];
+    int velocidade;
+    int forca;
+    int poder;
+} Carta;
+
+// Função para sortear uma carta aleatória
+Carta sortearCarta() {
+    Carta cartas[3] = {
+        {"Carro Veloz", 200, 50, 80},
+        {"Robo Gigante", 60, 90, 100},
+        {"Super Heroi", 150, 70, 95}
+    };
+    return cartas[rand() % 3]; // Sorteia uma carta aleatória
+}
+
+int main() {
+    srand(time(NULL)); // Inicializa a semente do rand()
+
+    Carta jogador = sortearCarta();
+    Carta computador = sortearCarta();
+
+    printf("\n=== SUPER TRUNFO ===\n");
+    printf("Sua carta: %s\n", jogador.nome);
+    printf("Atributos:\n");
+    printf("1 - Velocidade: %d\n", jogador.velocidade);
+    printf("2 - Forca: %d\n", jogador.forca);
+    printf("3 - Poder: %d\n", jogador.poder);
+
+    int escolha;
+    printf("\nEscolha um atributo (1-3): ");
+    scanf("%d", &escolha);
+
+    int jogador_atributo, computador_atributo;
+    char atributo_escolhido[20];
+
+    switch (escolha) {
+        case 1:
+            jogador_atributo = jogador.velocidade;
+            computador_atributo = computador.velocidade;
+            strcpy(atributo_escolhido, "Velocidade");
+            break;
+        case 2:
+            jogador_atributo = jogador.forca;
+            computador_atributo = computador.forca;
+            strcpy(atributo_escolhido, "Forca");
+            break;
+        case 3:
+            jogador_atributo = jogador.poder;
+            computador_atributo = computador.poder;
+            strcpy(atributo_escolhido, "Poder");
+            break;
+        default:
+            printf("Opcao invalida!\n");
+            return 1;
+    }
+
+    printf("\nResultado:\n");
+    printf("Sua %s: %d\n", atributo_escolhido, jogador_atributo);
+    printf("Computador (%s): %d\n", computador.nome, computador_atributo);
+
+    if (jogador_atributo > computador_atributo) {
+        printf("\nVoce venceu!\n");
+    } else if (jogador_atributo < computador_atributo) {
+        printf("\nComputador venceu!\n");
+    } else {
+        printf("\nEmpate!\n");
+    }
+
+    return 0;
+}
